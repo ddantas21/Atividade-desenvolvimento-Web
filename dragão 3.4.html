@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>3.4 - Painel Dinâmico de Cadastros</title>
+<style>
+  body {
+    font-family: 'Segoe UI', Arial, sans-serif;
+    background-color: #0d1524;
+    color: #e6edf3;
+    display: flex;
+    justify-content: center;
+    padding-top: 4rem;
+  }
+  .card {
+    background-color: #131c30;
+    border: 1px solid #1c2b45;
+    border-radius: 10px;
+    padding: 1.5rem;
+    width: 340px;
+    display: flex;
+    flex-direction: column;
+    gap: 0.8rem;
+  }
+  h1 {
+    font-size: 1.2rem;
+    color: #3fb2f0;
+    margin: 0 0 0.5rem;
+  }
+  input {
+    background-color: #0d1524;
+    border: 1px solid #2a3c5c;
+    color: #e6edf3;
+    padding: 0.6rem 0.8rem;
+    border-radius: 6px;
+    font-size: 0.95rem;
+  }
+  input:focus { outline: none; border-color: #3fb2f0; }
+  button {
+    background: linear-gradient(90deg, #3fb2f0, #7b5cf0);
+    color: white;
+    border: none;
+    padding: 0.65rem 1rem;
+    border-radius: 6px;
+    font-size: 0.95rem;
+    cursor: pointer;
+  }
+  button:hover { opacity: 0.85; }
+  ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+  }
+  ul li {
+    background-color: #1a2740;
+    padding: 0.5rem 0.8rem;
+    border-radius: 6px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .btn-excluir {
+    background: #e0455f;
+    border: none;
+    color: white;
+    padding: 0.25rem 0.6rem;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 0.8rem;
+  }
+  .btn-excluir:hover { opacity: 0.85; }
+</style>
+</head>
+<body>
+
+  <div class="card">
+    <h1>3.4 - Painel Dinâmico de Cadastros</h1>
+    <!-- Dados do produto lidos dentro de cadastrarProduto() -->
+    <input type="text" id="nomeProduto" placeholder="Nome do Produto">
+    <input type="number" id="precoProduto" placeholder="Preço (R$)">
+
+    <!-- onclick cria o <li> + botão Excluir e insere na lista -->
+    <button onclick="cadastrarProduto()">Cadastrar Produto</button>
+
+    <!-- Cada produto cadastrado vira um <li> filho desta <ul> -->
+    <ul id="listaProdutos"></ul>
+  </div>
+
+  <script>
+    // ==========================================================
+    // FUNÇÃO: cadastrarProduto()
+    // - Ligada ao onclick do botão "Cadastrar Produto".
+    // - Diferente do exercício 3.3, aqui não existe um array:
+    //   os próprios elementos <li> criados na tela SÃO os dados.
+    // ==========================================================
+    function cadastrarProduto() {
+      // Passo 1: captura as referências dos campos do formulário
+      const nomeInput = document.getElementById("nomeProduto");
+      const precoInput = document.getElementById("precoProduto");
+
+      const nome = nomeInput.value;
+      const preco = Number(precoInput.value); // texto -> número
+
+      // Validação simples: nome ou preço vazios cancelam o cadastro
+      if (nome.trim() === "" || precoInput.value === "") return;
+
+      // Passo 2: cria um novo <li> em memória (ainda não está na tela)
+      const li = document.createElement("li");
+      li.textContent = nome + " - R$ " + preco.toFixed(2);
+
+      // Passo 3: cria dinamicamente o botão "Excluir" desse produto
+      const botaoExcluir = document.createElement("button");
+      botaoExcluir.textContent = "Excluir";
+      botaoExcluir.classList.add("btn-excluir"); // aplica o estilo do CSS
+
+      // Passo 4: define o que acontece quando o botão for clicado.
+      // Como cada botão é criado dentro desta função, ele "lembra"
+      // (via closure) exatamente qual <li> deve remover.
+      botaoExcluir.onclick = function () {
+        li.remove(); // remove o <li> pai diretamente da tela
+      };
+
+      // Passo 5: monta a árvore de elementos:
+      // primeiro o botão entra dentro do li, depois o li entra na <ul>
+      li.appendChild(botaoExcluir);
+      document.getElementById("listaProdutos").appendChild(li);
+
+      // Passo 6: limpa os campos para permitir um novo cadastro
+      nomeInput.value = "";
+      precoInput.value = "";
+    }
+  </script>
+
+</body>
+</html>

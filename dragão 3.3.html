@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>3.3 - Adicionador de Tarefas em Array</title>
+<style>
+  body {
+    font-family: 'Segoe UI', Arial, sans-serif;
+    background-color: #0d1524;
+    color: #e6edf3;
+    display: flex;
+    justify-content: center;
+    padding-top: 4rem;
+  }
+  .card {
+    background-color: #131c30;
+    border: 1px solid #1c2b45;
+    border-radius: 10px;
+    padding: 1.5rem;
+    width: 320px;
+    display: flex;
+    flex-direction: column;
+    gap: 0.8rem;
+  }
+  h1 {
+    font-size: 1.2rem;
+    color: #3fb2f0;
+    margin: 0 0 0.5rem;
+  }
+  input {
+    background-color: #0d1524;
+    border: 1px solid #2a3c5c;
+    color: #e6edf3;
+    padding: 0.6rem 0.8rem;
+    border-radius: 6px;
+    font-size: 0.95rem;
+  }
+  input:focus { outline: none; border-color: #3fb2f0; }
+  button {
+    background: linear-gradient(90deg, #3fb2f0, #7b5cf0);
+    color: white;
+    border: none;
+    padding: 0.65rem 1rem;
+    border-radius: 6px;
+    font-size: 0.95rem;
+    cursor: pointer;
+  }
+  button:hover { opacity: 0.85; }
+  ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+  }
+  ul li {
+    background-color: #1a2740;
+    padding: 0.5rem 0.8rem;
+    border-radius: 6px;
+  }
+</style>
+</head>
+<body>
+
+  <div class="card">
+    <h1>3.3 - Adicionador de Tarefas em Array</h1>
+    <!-- Texto lido dentro de adicionarTarefa() -->
+    <input type="text" id="campoTarefa" placeholder="Descrição da tarefa">
+
+    <!-- onclick dispara a inclusão no array + atualização da tela -->
+    <button onclick="adicionarTarefa()">Adicionar Tarefa</button>
+
+    <!-- Lista reconstruída do zero a cada chamada de atualizarLista() -->
+    <ul id="minhasTarefas"></ul>
+  </div>
+
+  <script>
+    // ==========================================================
+    // VARIÁVEL GLOBAL: listaDeTarefas
+    // - Array vazio que guarda TODAS as tarefas digitadas.
+    // - É "global" porque fica fora de qualquer função, então
+    //   tanto adicionarTarefa() quanto atualizarLista() acessam
+    //   e alteram o mesmo array.
+    // ==========================================================
+    let listaDeTarefas = [];
+
+    // ==========================================================
+    // FUNÇÃO 1: adicionarTarefa()
+    // - Ligada ao onclick do botão "Adicionar Tarefa".
+    // - Passo 1: pega o texto digitado no input.
+    // - Passo 2 (validação simples): se estiver vazio, cancela
+    //   a função com "return" e não faz nada.
+    // - Passo 3: usa .push() para inserir o texto no FINAL do
+    //   array listaDeTarefas.
+    // - Passo 4: limpa o campo de texto (campo.value = "") para
+    //   o usuário já poder digitar a próxima tarefa.
+    // - Passo 5: chama atualizarLista() para redesenhar a tela.
+    // ==========================================================
+    function adicionarTarefa() {
+      const campo = document.getElementById("campoTarefa");
+      const texto = campo.value;
+
+      if (texto.trim() === "") return; // ignora tarefa vazia
+
+      listaDeTarefas.push(texto);
+      campo.value = "";
+
+      atualizarLista();
+    }
+
+    // ==========================================================
+    // FUNÇÃO 2: atualizarLista()
+    // - Responsável por REDESENHAR toda a lista <ul> na tela
+    //   com base no que existe hoje no array.
+    // - Passo 1: limpa todo o HTML de dentro do <ul> usando
+    //   innerHTML = "" (apaga os <li> antigos).
+    // - Passo 2: percorre o array do início ao fim com um laço
+    //   for tradicional (i começa em 0 e vai até length - 1).
+    // - Passo 3: para cada item do array, cria um novo <li>
+    //   (createElement), define o texto dele (textContent) e
+    //   o insere dentro da <ul> (appendChild).
+    // ==========================================================
+    function atualizarLista() {
+      document.getElementById("minhasTarefas").innerHTML = "";
+
+      for (let i = 0; i < listaDeTarefas.length; i++) {
+        const li = document.createElement("li");
+        li.textContent = listaDeTarefas[i];
+        document.getElementById("minhasTarefas").appendChild(li);
+      }
+    }
+  </script>
+
+</body>
+</html>

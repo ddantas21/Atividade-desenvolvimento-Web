@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>3.2 - Calculadora de Média com Validação</title>
+<style>
+  body {
+    font-family: 'Segoe UI', Arial, sans-serif;
+    background-color: #0d1524;
+    color: #e6edf3;
+    display: flex;
+    justify-content: center;
+    padding-top: 4rem;
+  }
+  .card {
+    background-color: #131c30;
+    border: 1px solid #1c2b45;
+    border-radius: 10px;
+    padding: 1.5rem;
+    width: 320px;
+    display: flex;
+    flex-direction: column;
+    gap: 0.8rem;
+  }
+  h1 {
+    font-size: 1.2rem;
+    color: #3fb2f0;
+    margin: 0 0 0.5rem;
+  }
+  input {
+    background-color: #0d1524;
+    border: 1px solid #2a3c5c;
+    color: #e6edf3;
+    padding: 0.6rem 0.8rem;
+    border-radius: 6px;
+    font-size: 0.95rem;
+  }
+  input:focus { outline: none; border-color: #3fb2f0; }
+  button {
+    background: linear-gradient(90deg, #3fb2f0, #7b5cf0);
+    color: white;
+    border: none;
+    padding: 0.65rem 1rem;
+    border-radius: 6px;
+    font-size: 0.95rem;
+    cursor: pointer;
+  }
+  button:hover { opacity: 0.85; }
+  p#resultadoCalculo { font-weight: bold; margin: 0; }
+</style>
+</head>
+<body>
+
+  <div class="card">
+    <h1>3.2 - Calculadora de Média com Validação</h1>
+    <!-- Campos numéricos lidos e convertidos em processarMedia() -->
+    <input type="number" id="nota1" placeholder="Nota 1">
+    <input type="number" id="nota2" placeholder="Nota 2">
+
+    <!-- onclick dispara a função que calcula e exibe o resultado -->
+    <button onclick="processarMedia()">Calcular Média</button>
+
+    <!-- Aqui entram o texto da média e a cor (verde/vermelho) -->
+    <p id="resultadoCalculo"></p>
+  </div>
+
+  <script>
+    // ==========================================================
+    // FUNÇÃO 1: calcularMedia(n1, n2)
+    // - Função MODULAR: recebe DOIS parâmetros (n1 e n2).
+    // - Faz apenas o cálculo puro (n1 + n2) / 2 e RETORNA o
+    //   resultado numérico. Não acessa a tela nem o HTML.
+    // - Vantagem: pode ser testada e reaproveitada sozinha.
+    // ==========================================================
+    function calcularMedia(n1, n2) {
+      return (n1 + n2) / 2;
+    }
+
+    // ==========================================================
+    // FUNÇÃO 2: processarMedia()
+    // - Ligada ao onclick do botão "Calcular Média".
+    // - Passo 1: pega o valor de cada <input type="number">
+    //   (que vem como TEXTO) e converte para número com Number().
+    // - Passo 2: chama calcularMedia() passando os dois números
+    //   já convertidos.
+    // - Passo 3: decide a mensagem e a cor do texto:
+    //     média >= 7.0  -> "Aprovado" em verde (style.color)
+    //     média <  7.0  -> "Recuperação" em vermelho
+    // ==========================================================
+    function processarMedia() {
+      const n1 = Number(document.getElementById("nota1").value);
+      const n2 = Number(document.getElementById("nota2").value);
+
+      const media = calcularMedia(n1, n2);
+      const resultado = document.getElementById("resultadoCalculo");
+
+      if (media >= 7.0) {
+        resultado.innerText = "Média: " + media.toFixed(1) + " - Aprovado";
+        resultado.style.color = "green"; // altera a cor via CSS inline
+      } else {
+        resultado.innerText = "Média: " + media.toFixed(1) + " - Recuperação";
+        resultado.style.color = "red";
+      }
+    }
+  </script>
+
+</body>
+</html>

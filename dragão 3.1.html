@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>3.1 - Gerador de Saudação Personalizada</title>
+<style>
+  body {
+    font-family: 'Segoe UI', Arial, sans-serif;
+    background-color: #0d1524;
+    color: #e6edf3;
+    display: flex;
+    justify-content: center;
+    padding-top: 4rem;
+  }
+  .card {
+    background-color: #131c30;
+    border: 1px solid #1c2b45;
+    border-radius: 10px;
+    padding: 1.5rem;
+    width: 320px;
+    display: flex;
+    flex-direction: column;
+    gap: 0.8rem;
+  }
+  h1 {
+    font-size: 1.2rem;
+    color: #3fb2f0;
+    margin: 0 0 0.5rem;
+  }
+  input {
+    background-color: #0d1524;
+    border: 1px solid #2a3c5c;
+    color: #e6edf3;
+    padding: 0.6rem 0.8rem;
+    border-radius: 6px;
+    font-size: 0.95rem;
+  }
+  input:focus { outline: none; border-color: #3fb2f0; }
+  button {
+    background: linear-gradient(90deg, #3fb2f0, #7b5cf0);
+    color: white;
+    border: none;
+    padding: 0.65rem 1rem;
+    border-radius: 6px;
+    font-size: 0.95rem;
+    cursor: pointer;
+  }
+  button:hover { opacity: 0.85; }
+  p#mensagem { font-weight: bold; margin: 0; }
+</style>
+</head>
+<body>
+
+  <div class="card">
+    <h1>3.1 - Gerador de Saudação Personalizada</h1>
+
+    <!-- Campo de entrada: o valor digitado aqui é lido em saudarUsuario() -->
+    <input type="text" id="campoNome" placeholder="Digite seu nome">
+
+    <!-- Ao clicar, o evento onclick chama a função saudarUsuario() -->
+    <button onclick="saudarUsuario()">Saudar</button>
+
+    <!-- Parágrafo vazio que será preenchido dinamicamente pelo JS -->
+    <p id="mensagem"></p>
+  </div>
+
+  <script>
+    // ==========================================================
+    // FUNÇÃO 1: construirSaudacao(nome)
+    // - Recebe "nome" como PARÂMETRO (dado de entrada).
+    // - Não mexe em nada da tela: só monta e RETORNA uma string.
+    // - Separar "montar o texto" de "mostrar o texto" é uma boa
+    //   prática: essa função pode ser reaproveitada em outro
+    //   lugar do sistema sem depender do HTML.
+    // ==========================================================
+    function construirSaudacao(nome) {
+      return "Olá, " + nome + "! Seja bem-vindo ao curso de Web!";
+    }
+
+    // ==========================================================
+    // FUNÇÃO 2: saudarUsuario()
+    // - É a função "principal", ligada ao onclick do botão.
+    // - Passo 1: lê o valor digitado no <input id="campoNome">.
+    // - Passo 2: chama construirSaudacao() passando esse valor
+    //   e GUARDA o retorno na variável textoFinal.
+    // - Passo 3: escreve o resultado dentro do <p id="mensagem">
+    //   usando innerText (só texto, sem interpretar tags HTML).
+    // ==========================================================
+    function saudarUsuario() {
+      const nomeDigitado = document.getElementById("campoNome").value;
+      const textoFinal = construirSaudacao(nomeDigitado);
+      document.getElementById("mensagem").innerText = textoFinal;
+    }
+  </script>
+
+</body>
+</html>

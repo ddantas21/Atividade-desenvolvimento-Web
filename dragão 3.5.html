@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>3.5 (Desafio) - Filtro e Busca em Tempo Real</title>
+<style>
+  body {
+    font-family: 'Segoe UI', Arial, sans-serif;
+    background-color: #0d1524;
+    color: #e6edf3;
+    display: flex;
+    justify-content: center;
+    padding-top: 4rem;
+  }
+  .card {
+    background-color: #131c30;
+    border: 1px solid #1c2b45;
+    border-radius: 10px;
+    padding: 1.5rem;
+    width: 320px;
+    display: flex;
+    flex-direction: column;
+    gap: 0.8rem;
+  }
+  h1 {
+    font-size: 1.2rem;
+    color: #3fb2f0;
+    margin: 0 0 0.5rem;
+  }
+  input {
+    background-color: #0d1524;
+    border: 1px solid #2a3c5c;
+    color: #e6edf3;
+    padding: 0.6rem 0.8rem;
+    border-radius: 6px;
+    font-size: 0.95rem;
+  }
+  input:focus { outline: none; border-color: #3fb2f0; }
+  ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+  }
+  ul li {
+    background-color: #1a2740;
+    padding: 0.5rem 0.8rem;
+    border-radius: 6px;
+  }
+</style>
+</head>
+<body>
+
+  <div class="card">
+    <h1>3.5 (Desafio) - Filtro e Busca em Tempo Real</h1>
+    <!-- oninput chama filtrarTecnologias() a cada tecla digitada -->
+    <input type="text" id="campoBusca" placeholder="Buscar tecnologia..." oninput="filtrarTecnologias()">
+
+    <!-- Lista fixa de tecnologias que será mostrada/escondida pelo JS -->
+    <ul id="listaTecnologias">
+      <li>JavaScript</li>
+      <li>Python</li>
+      <li>HTML</li>
+      <li>CSS</li>
+      <li>PHP</li>
+      <li>Java</li>
+    </ul>
+  </div>
+
+  <script>
+    // ==========================================================
+    // FUNÇÃO: filtrarTecnologias()
+    // - Ligada ao evento oninput do campo de busca, ou seja,
+    //   é chamada A CADA caractere digitado ou apagado (bem
+    //   diferente do onclick, que só dispara em um clique).
+    // ==========================================================
+    function filtrarTecnologias() {
+      // Passo 1: pega o texto digitado e converte para minúsculas,
+      // assim a busca não diferencia maiúsculas de minúsculas
+      // (ex.: "java" encontra "Java").
+      const termoBuscado = document
+        .getElementById("campoBusca")
+        .value.toLowerCase();
+
+      // Passo 2: seleciona TODOS os <li> da lista de uma vez,
+      // usando querySelectorAll (retorna uma NodeList).
+      const itens = document.querySelectorAll("#listaTecnologias li");
+
+      // Passo 3: percorre cada <li> comparando o texto dele
+      // com o termo buscado.
+      for (let i = 0; i < itens.length; i++) {
+        const elemento = itens[i];
+        const textoItem = elemento.textContent.toLowerCase();
+
+        // .includes() verifica se termoBuscado aparece dentro
+        // do texto do item (busca parcial, não precisa ser igual)
+        if (textoItem.includes(termoBuscado)) {
+          elemento.style.display = "block"; // mantém visível
+        } else {
+          elemento.style.display = "none";  // esconde o item
+        }
+      }
+    }
+  </script>
+
+</body>
+</html>
